@@ -1,0 +1,14 @@
+version: '3'
+services:
+  dist_babyheap1970:
+    build:
+      context: .
+      args:
+        FLAG: "FAKECON{***** REDACTED *****}"
+    ulimits:
+      nproc: 65535
+      core: 0
+    ports:
+      - "9999:9999"
+    entrypoint: /etc/init.sh
+    restart: unless-stopped

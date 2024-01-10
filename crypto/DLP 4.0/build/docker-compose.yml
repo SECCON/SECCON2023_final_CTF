@@ -1,0 +1,10 @@
+version: '3'
+services:
+  server:
+    build: .
+    working_dir: /home/sage
+    ports:
+      - "8888:8888"
+    restart: always
+    environment:
+      - "FLAG=SECCON{Yay! You've got a 333-bit useful prime for CTF! <333}"

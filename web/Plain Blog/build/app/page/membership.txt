@@ -1,0 +1,5 @@
+Premium members of PlainBlog can enhance their page viewing experience. 
+
+To become a premium member, please fill your password and access the following URL. 
+
+/premium?password=[[PASSWORD]]&page=index

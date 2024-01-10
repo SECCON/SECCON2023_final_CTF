@@ -1,0 +1,7 @@
+version: '3'
+services:
+  bomberman:
+    build: .
+    ports:
+      - "22022:22022"
+    restart: unless-stopped

@@ -1,0 +1,26 @@
+{
+  "name": "okihai",
+  "version": "1.0.0",
+  "description": "okihai / SECCON CTF 2023 Finals",
+  "main": "okihai.js",
+  "bin": "okihai.js",
+  "scripts": {
+    "obfuscator": "javascript-obfuscator --numbers-to-expressions=true --rename-globals=true --split-strings=true --string-array=true --unicode-escape-sequence=true"
+  },
+  "keywords": [
+    "okihai"
+  ],
+  "author": "Satoki",
+  "license": "Good Boy License",
+  "pkg": {
+    "assets": [
+      "assets/**/*"
+    ],
+    "scripts": [
+      "okihai.js"
+    ]
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

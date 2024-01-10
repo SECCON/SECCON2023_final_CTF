@@ -1,0 +1,14 @@
+version: '3'
+services:
+  babyheap1970:
+    build:
+      context: files/
+      args:
+        FLAG: "SECCON{I_d0nt_s3e_7h3_pr3f1x_'baby'_rec3nt1y_btw}"
+    ulimits:
+      nproc: 65535
+      core: 0
+    ports:
+      - "9999:9999"
+    entrypoint: /etc/init.sh
+    restart: unless-stopped

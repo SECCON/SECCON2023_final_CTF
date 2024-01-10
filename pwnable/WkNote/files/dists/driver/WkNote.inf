@@ -1,0 +1,81 @@
+;
+; WkNote.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=SECCON Devices
+ClassGuid={94ecb25d-eba0-4aff-8992-dfdfc6d1e521}
+Provider=%ManufacturerName%
+DriverVer = 12/14/2023,23.37.30.640
+CatalogFile=WkNote.cat
+PnpLockdown=1
+
+;This template is supported for OS version 17763 (Windows 10 version 1809) and after.
+;For Windows OS prior to Windows 10 1809 set DefaultDestDir = 12
+[DestinationDirs]
+DefaultDestDir = 12
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+WkNote.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%WkNote.DeviceDesc%=WkNote_Device, Root\WkNote ; TODO: edit hw-id
+
+[WkNote_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+WkNote.sys
+
+;-------------- Service installation
+[WkNote_Device.NT.Services]
+AddService = WkNote,%SPSVCINST_ASSOCSERVICE%, WkNote_Service_Inst
+
+; -------------- WkNote driver install sections
+[WkNote_Service_Inst]
+DisplayName    = %WkNote.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\WkNote.sys
+
+;
+;--- WkNote_Device Coinstaller installation ------
+;
+
+[WkNote_Device.NT.CoInstallers]
+AddReg=WkNote_Device_CoInstaller_AddReg
+CopyFiles=WkNote_Device_CoInstaller_CopyFiles
+
+[WkNote_Device_CoInstaller_AddReg]
+;
+
+
+[WkNote_Device_CoInstaller_CopyFiles]
+;
+
+
+[WkNote_Device.NT.Wdf]
+KmdfService =  WkNote, WkNote_wdfsect
+[WkNote_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="ShiftCrops"
+DiskName = "WkNote Installation Disk"
+WkNote.DeviceDesc = " WkNote Challenge"
+WkNote.SvcDesc = "WkNote Service"

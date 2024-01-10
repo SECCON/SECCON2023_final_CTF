@@ -1,0 +1,24 @@
+diff '--color=auto' -ur old/BreakingRainbow/xl-20160426/matrix_polynomial.h BreakingRainbow/xl-20160426/matrix_polynomial.h
+--- old/BreakingRainbow/xl-20160426/matrix_polynomial.h	2024-01-01 03:21:15.019184001 +0900
++++ BreakingRainbow/xl-20160426/matrix_polynomial.h	2024-01-01 01:40:27.538908891 +0900
+@@ -3,6 +3,8 @@
+ 
+ #include <stdio.h>
+ #include <math.h>
++#define min(a, b) ((a) < (b) ? (a) : (b))
++#define max(a, b) ((a) > (b) ? (a) : (b))
+ 
+ template <unsigned m, unsigned n, unsigned deg_coef>
+ class matrix_polynomial
+diff '--color=auto' -ur old/BreakingRainbow/xl-20160426/xl.h BreakingRainbow/xl-20160426/xl.h
+--- old/BreakingRainbow/xl-20160426/xl.h	2024-01-01 03:21:15.019184001 +0900
++++ BreakingRainbow/xl-20160426/xl.h	2024-01-01 01:40:27.546908936 +0900
+@@ -8,6 +8,8 @@
+ 
+ #include "options.h"
+ 
++#undef min
++#undef max
+ #include "wiedemann.h"
+ 
+ #include "bw1.h"

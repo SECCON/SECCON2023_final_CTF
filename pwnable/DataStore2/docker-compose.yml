@@ -1,0 +1,18 @@
+version: '3'
+services:
+  challenge:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile
+      args:
+        FLAG: "SECCON{1by73_15_700_5m4ll_70_570r3_r3f3r3nc3_c0un75}"
+    working_dir: /home/pwn
+    container_name: datastore2
+    ulimits:
+      nproc: 65535
+      core: 0
+    ports:
+      - "7352:9999"
+    entrypoint: /etc/init.sh
+    init: true
+    restart: always

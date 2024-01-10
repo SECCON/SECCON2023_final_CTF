@@ -1,0 +1,47 @@
+Vagrant.configure("2") do |config|
+  config.vagrant.plugins = ["winrm", "winrm-elevated", "vagrant-reload", "vagrant-timezone"]
+
+  config.vm.box = "gusztavvargadr/windows-11-23h2-enterprise"
+  # config.vm.box_architecture = "amd64"
+  config.vm.box_version = "2302.0.2310"
+  config.vm.box_check_update = false
+  config.vm.boot_timeout = 1000
+
+  config.timezone.value = "Tokyo Standard Time"
+
+  config.vm.provision :shell,
+    inline: <<-SHELL
+      bcdedit /set testsigning on
+
+      Stop-Service -Name wuauserv -PassThru
+      Set-Service wuauserv -StartupType Disabled
+
+      Remove-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\policies\\system" -Name EnableLUA
+      Remove-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name AutoLogonCount
+      Set-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name AutoAdminLogon -Type String -Value "1"
+      Set-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultUserName -Type String -Value "Vagrant"
+      Set-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultPassword -Type String -Value "vagrant"
+    SHELL
+
+  config.vm.provision :reload
+
+  config.vm.provision :file,
+    source: "dists", destination: "C:\\tmp"
+
+  config.vm.provision :shell,
+    inline: <<-SHELL
+      net user /add SECCON seccon
+
+      Set-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultUserName -Type String -Value "SECCON"
+      Set-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultPassword -Type String -Value "seccon"
+    SHELL
+
+  config.vm.provision :shell, privileged: false,
+    inline: <<-SHELL
+      schtasks /create /tn InstallDriver /xml C:\\tmp\\dists\\deploy\\install_driver_task.xml
+      schtasks /run /tn InstallDriver
+      schtasks /delete /tn InstallDriver /f
+
+      # net user Vagrant /active:no
+    SHELL
+end

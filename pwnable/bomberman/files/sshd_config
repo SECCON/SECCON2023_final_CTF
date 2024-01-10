@@ -1,0 +1,11 @@
+# Listen on 0.0.0.0:22022
+Port 22022
+AddressFamily any
+ListenAddress 0.0.0.0
+
+PasswordAuthentication yes
+PermitEmptyPasswords no
+PermitRootLogin no
+
+PermitTTY yes
+ForceCommand /home/ctf/game

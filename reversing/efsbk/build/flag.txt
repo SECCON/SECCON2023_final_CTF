@@ -1,0 +1,21 @@
+"SECCON{c33f407edefbda181"
+
+The string written above is the first part of the flag.
+The flag is split into three parts.
+
+Okay, the following hex string is the second part of the flag.
+
+"faf764126df90cd28fa46775"
+
+If you find all of the three parts, simply concatenate them to get the entire flag.
+
+--------- Example ---------
+If you got "FAKECON{foo", "barfizzbuzz", and "ponta}" in this text,
+the flag would be FAKECON{foobarfizzbuzzponta}
+---------------------------
+
+Finally, the last part of the flag is:
+
+"0d25ff5aab80c1ea1108ec4}"
+
+Did you find the flag...?
